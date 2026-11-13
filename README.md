@@ -119,41 +119,9 @@ Fractal-Explorer/
 
 **Important:** Keep `app.py`, `fractals.py` and the `Pictures` folder in the same main project directory. Do not rename or move the image files unless you also update their paths in `app.py`.
 
-## 8. Troubleshooting
-
-**Problem: `ModuleNotFoundError`**
-
-If Python reports that a module is missing, make sure your virtual environment is activated and install the required dependencies again:
-
-```bash
-python -m pip install numpy matplotlib streamlit
 ```
 
-**Problem: `ImportError: cannot import name ...`**
-
-Check that `fractals.py` contains the required fractal classes and that their names match the imports in `app.py`.
-
-**Problem: Images are not displayed**
-
-Check that the `Pictures` directory exists and contains all six image files with the correct filenames.
-
-**Problem: Streamlit command is not recognised**
-
-Try running Streamlit through Python:
-
-```bash
-python -m streamlit run app.py
-```
-
-**Problem: The application is already running on port 8501**
-
-Stop the previous Streamlit process or use another port:
-
-```bash
-streamlit run app.py --server.port 8502
-```
-
-## 9. Stopping the Application
+## 8. Stopping the Application
 
 To stop the local Streamlit server, return to the terminal and press:
 
