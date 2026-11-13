@@ -25,6 +25,7 @@ Users can:
 Before running the project, make sure you have installed:
 
 - Python 3.13 or newer (recommended).
+- PyCharm
 - Git.
 - pip (Python package installer).
 
