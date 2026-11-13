@@ -119,7 +119,7 @@ Fractal-Explorer/
 
 **Important:** Keep `app.py`, `fractals.py` and the `Pictures` folder in the same main project directory. Do not rename or move the image files unless you also update their paths in `app.py`.
 
-```
+
 
 ## 8. Stopping the Application
 
