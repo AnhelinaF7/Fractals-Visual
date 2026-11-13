@@ -129,7 +129,7 @@ To stop the local Streamlit server, return to the terminal and press:
 Ctrl + C
 ```
 
-## 10. Contributing to the Project
+## 9. Contributing to the Project
 
 All group members are welcome to explore the code, test the fractal algorithms, identify bugs and suggest improvements.
 
