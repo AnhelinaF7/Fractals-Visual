@@ -24,7 +24,7 @@ Users can:
 
 Before running the project, make sure you have installed:
 
-- Python 3.10 or newer (recommended).
+- Python 3.13 or newer (recommended).
 - Git.
 - pip (Python package installer).
 
