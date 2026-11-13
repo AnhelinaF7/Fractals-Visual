@@ -103,7 +103,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Home page: six selectable fractal cards.
+
 if st.session_state.selected_fractal is None:
     st.subheader("Choose a fractal")
     st.write("Select one of the fractals below to open its interactive controls.")
@@ -114,13 +114,13 @@ if st.session_state.selected_fractal is None:
     for index, name in enumerate(names):
         with card_columns[index % 3]:
             with st.container(border=True):
-                # Додаємо картинку фрактала в картку, якщо файл існує
+
                 fractal_data = FRACTALS[name]
                 if "image" in fractal_data:
                     try:
                         st.image(fractal_data["image"], width="stretch")
                     except Exception:
-                        pass  # Якщо зображення ще не завантажене у папки, воно просто не покажеться без помилки
+                        pass
 
                 st.markdown(f"## {fractal_data['symbol']} {name}")
                 st.write(fractal_data["description"])
@@ -155,7 +155,7 @@ else:
         "turbo", "hot", "cool", "twilight", "Spectral",
     ]
 
-    # Create the selected fractal using its actual constructor parameters.
+
     if selected in ("Julia Set", "Mandelbrot Set", "Newton Fractal"):
         if selected == "Julia Set":
             default_bounds = (-2.0, 2.0, -2.0, 2.0)
@@ -302,7 +302,7 @@ else:
             line_width=line_width,
         )
 
-    else:  # Fractal Tree
+    else:
         st.sidebar.markdown("### Branch settings")
         depth = st.sidebar.slider("Recursion depth", 1, 12, 9)
         length = st.sidebar.slider("Initial branch length", 0.5, 3.0, 1.0, step=0.1)
@@ -325,15 +325,14 @@ else:
             line_width=line_width,
         )
 
-    # Generate and display the plot.
     try:
         with st.spinner("Generating your fractal..."):
             fig, ax = fractal.plot()
 
-        # Виправлено параметр ширини контейнера під актуальну версію streamlit
+
         st.pyplot(fig, use_container_width=True)
 
-        # Prepare a downloadable PNG of the current visualisation.
+
         image_buffer = io.BytesIO()
         fig.savefig(
             image_buffer,
