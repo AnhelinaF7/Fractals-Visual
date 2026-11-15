@@ -1,6 +1,5 @@
 from fractals import MandelbrotSet
 
-# Create a Julia Set object
 mandelbrot = MandelbrotSet(
     x_min=-2.5,
     x_max=1.5,
@@ -13,5 +12,4 @@ mandelbrot = MandelbrotSet(
     colour_map="magma"
 )
 
-# Generate and display the fractal
 mandelbrot.plot()
