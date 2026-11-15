@@ -1,6 +1,5 @@
 from fractals import JuliaSet
 
-# Create a Julia Set object
 julia = JuliaSet(
     c_real=-0.7,
     c_imag=0.27,
@@ -14,6 +13,4 @@ julia = JuliaSet(
     colour_map="magma"
 )
 
-# Generate and display the fractal
 julia.plot()
-
