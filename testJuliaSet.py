@@ -14,3 +14,4 @@ julia = JuliaSet(
 )
 
 julia.plot()
+
