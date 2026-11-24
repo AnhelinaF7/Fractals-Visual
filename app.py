@@ -308,6 +308,33 @@ else:
             colour=colour,
             line_width=line_width,
         )
+    
+    elif selected == "Koch Anti-Snowflake":
+        st.sidebar.markdown("### Shape settings")
+        depth = st.sidebar.slider(
+            "Recursion depth",
+            0, 5, 3
+        )
+        size = st.sidebar.slider(
+            "Size",
+            0.5, 5.0, 2.0,
+            step=0.1
+        )
+        colour = st.sidebar.color_picker(
+            "Line colour",
+            "#4169E1"
+        )
+        line_width = st.sidebar.slider(
+            "Line width",
+            0.5, 4.0, 1.5,
+            step=0.1
+        )
+        fractal = KochAntiSnowflake(
+            depth=depth,
+            size=size,
+            colour=colour,
+            line_width=line_width
+        )
 
     else:
         st.sidebar.markdown("### Branch settings")
