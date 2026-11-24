@@ -35,15 +35,37 @@ st.markdown(
         margin-bottom: 1.5rem;
     }
     
-    div[data-testid="stImage"] img {
-    height: 250px;
-    object-fit: contain;
-}
-    
     div.stButton > button {
         width: 100%;
         min-height: 3rem;
         border-radius: 12px;
+    }
+
+    /* Keep all seven fractal cards exactly the same size. */
+    div[class*="st-key-fractal_card_"] {
+        height: 510px;
+        min-height: 510px;
+        max-height: 510px;
+        overflow: hidden;
+    }
+
+    /* Give every card image the same visual area. */
+    div[class*="st-key-fractal_card_"] [data-testid="stImage"] {
+        height: 205px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    div[class*="st-key-fractal_card_"] [data-testid="stImage"] img {
+        width: 100%;
+        height: 205px;
+        object-fit: contain;
+    }
+
+    div[class*="st-key-fractal_card_"] h2 {
+        min-height: 3.5rem;
     }
     </style>
     """,
@@ -119,7 +141,7 @@ if st.session_state.selected_fractal is None:
 
     for index, name in enumerate(names):
         with card_columns[index % 3]:
-            with st.container(border=True):
+            with st.container(border=True, key=f"fractal_card_{index}"):
 
                 fractal_data = FRACTALS[name]
                 if "image" in fractal_data:
