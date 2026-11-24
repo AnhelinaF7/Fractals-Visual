@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 
 
 class KochAntiSnowflake:
+    """Generate and plot an inward-pointing Koch anti-snowflake."""
 
     def __init__(
         self,
@@ -11,65 +12,66 @@ class KochAntiSnowflake:
         colour="royalblue",
         line_width=1.5
     ):
-
         self.depth = depth
         self.size = size
         self.colour = colour
         self.line_width = line_width
-
         self._validate_parameters()
 
     def _validate_parameters(self):
+        if (
+            isinstance(self.depth, bool)
+            or not isinstance(self.depth, (int, np.integer))
+            or self.depth < 0
+        ):
+            raise ValueError("depth must be a non-negative integer.")
 
-        if not isinstance(self.depth, int) or self.depth < 0:
-            raise ValueError("depth must be a non-negative integer")
+        if (
+            isinstance(self.size, bool)
+            or not np.isscalar(self.size)
+            or not np.isfinite(self.size)
+            or self.size <= 0
+        ):
+            raise ValueError("size must be a positive finite number.")
 
-        if self.size <= 0:
-            raise ValueError("size must be positive")
+        if (
+            isinstance(self.line_width, bool)
+            or not np.isscalar(self.line_width)
+            or not np.isfinite(self.line_width)
+            or self.line_width <= 0
+        ):
+            raise ValueError("line_width must be a positive finite number.")
 
-        if self.line_width <= 0:
-            raise ValueError("line_width must be positive")
+        if not isinstance(self.colour, str):
+            raise ValueError("colour must be a string.")
 
     def _generate_next_iteration(self, points):
-
         new_points = []
+        angle = np.radians(60)
+        rotation = np.array([
+            [np.cos(angle), -np.sin(angle)],
+            [np.sin(angle), np.cos(angle)]
+        ])
 
         for i in range(len(points) - 1):
-
             p1 = points[i]
             p2 = points[i + 1]
 
-            
             one_third = p1 + (p2 - p1) / 3
             two_thirds = p1 + 2 * (p2 - p1) / 3
-
-            
             direction = two_thirds - one_third
 
-            angle = np.radians(60)
-
-            rotation = np.array([
-                [np.cos(angle), -np.sin(angle)],
-                [np.sin(angle), np.cos(angle)]
-            ])
-
+            # The +60 degree rotation creates an inward-pointing notch
+            # for the counter-clockwise orientation of the initial triangle.
             peak = one_third + rotation @ direction
 
-            
-            new_points.extend([
-                p1,
-                one_third,
-                peak,
-                two_thirds
-            ])
+            new_points.extend([p1, one_third, peak, two_thirds])
 
         new_points.append(points[-1])
-
-        return np.array(new_points)
+        return np.asarray(new_points, dtype=float)
 
     def calculate(self):
-
-        
+        """Return the coordinates of the anti-snowflake boundary."""
         height = np.sqrt(3) * self.size / 2
 
         points = np.array([
@@ -79,7 +81,6 @@ class KochAntiSnowflake:
             [0.0, 0.0]
         ])
 
-        
         for _ in range(self.depth):
             points = self._generate_next_iteration(points)
 
@@ -92,39 +93,32 @@ class KochAntiSnowflake:
         save_path=None,
         dpi=150
     ):
-
+        """Create a Matplotlib figure and return (fig, ax)."""
         points = self.calculate()
+        fig, ax = plt.subplots(figsize=figsize)
 
-        plt.figure(figsize=figsize)
-
-        plt.plot(
+        ax.plot(
             points[:, 0],
             points[:, 1],
             color=self.colour,
             linewidth=self.line_width
         )
-
-        plt.fill(
+        ax.fill(
             points[:, 0],
             points[:, 1],
             color=self.colour,
             alpha=0.12
         )
 
-        plt.title(title)
-        plt.axis("equal")
-        plt.axis("off")
-
-        plt.tight_layout()
+        ax.set_title(title)
+        ax.set_aspect("equal")
+        ax.axis("off")
+        fig.tight_layout()
 
         if save_path is not None:
-            plt.savefig(
-                save_path,
-                dpi=dpi,
-                bbox_inches="tight"
-            )
+            fig.savefig(save_path, dpi=dpi, bbox_inches="tight")
 
-        plt.show()
+        return fig, ax
 
 
 class JuliaSet:
@@ -332,7 +326,6 @@ class JuliaSet:
                 bbox_inches="tight"
             )
 
-        plt.show()
 
         return fig, ax
 
@@ -566,7 +559,6 @@ class MandelbrotSet:
                 bbox_inches="tight"
             )
 
-        plt.show()
 
         return fig, ax
 
@@ -705,7 +697,6 @@ class SierpinskiTriangle:
                 bbox_inches="tight"
             )
 
-        plt.show()
 
         return fig, ax
 
@@ -854,7 +845,6 @@ class KochSnowflake:
                 bbox_inches="tight"
             )
 
-        plt.show()
 
         return fig, ax
 
@@ -1044,7 +1034,6 @@ class FractalTree:
                 bbox_inches="tight"
             )
 
-        plt.show()
 
         return fig, ax
 
@@ -1300,8 +1289,6 @@ class NewtonFractal:
                 bbox_inches="tight"
             )
 
-        plt.show()
 
         return fig, ax
-
 

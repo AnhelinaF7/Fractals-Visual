@@ -1,7 +1,6 @@
 import io
 
 import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
 import streamlit as st
 
 from fractals import (
