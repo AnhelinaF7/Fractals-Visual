@@ -97,24 +97,28 @@ class KochAntiSnowflake:
         points = self.calculate()
         fig, ax = plt.subplots(figsize=figsize)
 
+        # Centre the fractal around the middle of the plotting area while
+        # keeping fixed limits, so changing Size still changes its visible size.
+        height = np.sqrt(3) * self.size / 2
+        centred_x = points[:, 0] - self.size / 2
+        centred_y = points[:, 1] - height / 2
+
         ax.plot(
-            points[:, 0],
-            points[:, 1],
+            centred_x,
+            centred_y,
             color=self.colour,
             linewidth=self.line_width
         )
         ax.fill(
-            points[:, 0],
-            points[:, 1],
+            centred_x,
+            centred_y,
             color=self.colour,
             alpha=0.12
         )
 
-        # Keep the viewing window fixed to the app's Size slider range.
-        # Otherwise Matplotlib rescales the axes after every redraw, making
-        # different size values look almost identical on screen.
-        ax.set_xlim(-0.5, 5.5)
-        ax.set_ylim(-0.5, 5.0)
+        # A fixed square window keeps the centre stable as Size changes.
+        ax.set_xlim(-2.75, 2.75)
+        ax.set_ylim(-2.75, 2.75)
         ax.set_title(title)
         ax.set_aspect("equal", adjustable="box")
         ax.axis("off")
