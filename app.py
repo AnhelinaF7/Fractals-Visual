@@ -11,6 +11,7 @@ from fractals import (
     KochSnowflake,
     FractalTree,
     NewtonFractal,
+    KochAntiSnowflake,
 )
 
 
@@ -74,6 +75,12 @@ FRACTALS = {
         "description": "A geometric fractal built by repeatedly adding triangular bumps.",
         "symbol": "",
         "image": "Pictures/KochSnowflakePic.jpeg",
+    },
+    "Koch Anti-Snowflake": {
+        "class": KochAntiSnowflake,
+        "description": "A geometric fractal created by repeatedly adding inward-pointing triangular bumps.",
+        "symbol": "",
+        "image": "Pictures/Koch-AntiSnowflake.png",
     },
     "Fractal Tree": {
         "class": FractalTree,
