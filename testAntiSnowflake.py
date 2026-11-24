@@ -52,3 +52,13 @@ if __name__ == "__main__":
     test_anti_snowflake_invalid_depth()
 
     print("All Koch Anti-Snowflake tests passed!")
+
+
+fractal = KochAntiSnowflake(
+    depth=4,
+    size=2,
+    colour="purple",
+    line_width=1.2
+)
+
+fractal.plot()
