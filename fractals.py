@@ -110,8 +110,13 @@ class KochAntiSnowflake:
             alpha=0.12
         )
 
+        # Keep the viewing window fixed to the app's Size slider range.
+        # Otherwise Matplotlib rescales the axes after every redraw, making
+        # different size values look almost identical on screen.
+        ax.set_xlim(-0.5, 5.5)
+        ax.set_ylim(-0.5, 5.0)
         ax.set_title(title)
-        ax.set_aspect("equal")
+        ax.set_aspect("equal", adjustable="box")
         ax.axis("off")
         fig.tight_layout()
 
@@ -679,8 +684,11 @@ class SierpinskiTriangle:
                 color=selected_colour
             )
 
+        # Fixed viewport makes the Size slider visibly change the triangle.
+        ax.set_xlim(-3.0, 3.0)
+        ax.set_ylim(-2.0, 2.0)
         ax.set_title(title)
-        ax.set_aspect("equal")
+        ax.set_aspect("equal", adjustable="box")
 
         if show_axes:
             ax.set_xlabel("X")
@@ -827,8 +835,12 @@ class KochSnowflake:
             linewidth=selected_width
         )
 
+        # Fixed viewport makes the Size slider visibly change the snowflake.
+        # The Koch construction extends below the original triangle's base.
+        ax.set_xlim(-0.5, 5.5)
+        ax.set_ylim(-2.0, 5.0)
         ax.set_title(title)
-        ax.set_aspect("equal")
+        ax.set_aspect("equal", adjustable="box")
 
         if show_axes:
             ax.set_xlabel("X")
