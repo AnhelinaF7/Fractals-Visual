@@ -1,6 +1,132 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+
+class KochAntiSnowflake:
+
+    def __init__(
+        self,
+        depth=3,
+        size=2.0,
+        colour="royalblue",
+        line_width=1.5
+    ):
+
+        self.depth = depth
+        self.size = size
+        self.colour = colour
+        self.line_width = line_width
+
+        self._validate_parameters()
+
+    def _validate_parameters(self):
+
+        if not isinstance(self.depth, int) or self.depth < 0:
+            raise ValueError("depth must be a non-negative integer")
+
+        if self.size <= 0:
+            raise ValueError("size must be positive")
+
+        if self.line_width <= 0:
+            raise ValueError("line_width must be positive")
+
+    def _generate_next_iteration(self, points):
+
+        new_points = []
+
+        for i in range(len(points) - 1):
+
+            p1 = points[i]
+            p2 = points[i + 1]
+
+            
+            one_third = p1 + (p2 - p1) / 3
+            two_thirds = p1 + 2 * (p2 - p1) / 3
+
+            
+            direction = two_thirds - one_third
+
+            angle = np.radians(60)
+
+            rotation = np.array([
+                [np.cos(angle), -np.sin(angle)],
+                [np.sin(angle), np.cos(angle)]
+            ])
+
+            peak = one_third + rotation @ direction
+
+            
+            new_points.extend([
+                p1,
+                one_third,
+                peak,
+                two_thirds
+            ])
+
+        new_points.append(points[-1])
+
+        return np.array(new_points)
+
+    def calculate(self):
+
+        
+        height = np.sqrt(3) * self.size / 2
+
+        points = np.array([
+            [0.0, 0.0],
+            [self.size, 0.0],
+            [self.size / 2, height],
+            [0.0, 0.0]
+        ])
+
+        
+        for _ in range(self.depth):
+            points = self._generate_next_iteration(points)
+
+        return points
+
+    def plot(
+        self,
+        title="Koch Anti-Snowflake",
+        figsize=(8, 8),
+        save_path=None,
+        dpi=150
+    ):
+
+        points = self.calculate()
+
+        plt.figure(figsize=figsize)
+
+        plt.plot(
+            points[:, 0],
+            points[:, 1],
+            color=self.colour,
+            linewidth=self.line_width
+        )
+
+        plt.fill(
+            points[:, 0],
+            points[:, 1],
+            color=self.colour,
+            alpha=0.12
+        )
+
+        plt.title(title)
+        plt.axis("equal")
+        plt.axis("off")
+
+        plt.tight_layout()
+
+        if save_path is not None:
+            plt.savefig(
+                save_path,
+                dpi=dpi,
+                bbox_inches="tight"
+            )
+
+        plt.show()
+
+
 class JuliaSet:
 
     def __init__(
