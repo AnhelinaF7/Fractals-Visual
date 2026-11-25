@@ -772,6 +772,10 @@ class KochSnowflake:
 
         points = self.calculate()
 
+        centre = (points.min(axis=0) + points.max(axis=0)) / 2
+        points = (points - centre) * 0.9 + centre
+        points[:, 1] += self.size * 0.2
+
         fig, ax = plt.subplots(figsize=figsize)
 
         ax.plot(
