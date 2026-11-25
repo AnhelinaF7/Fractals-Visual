@@ -10,6 +10,7 @@ The application currently supports six types of fractals:
 - **Mandelbrot Set** – visualises the famous Mandelbrot set.
 - **Sierpinski Triangle** – demonstrates recursive geometric patterns.
 - **Koch Snowflake** – explores recursive curve construction.
+- **Koch Anti-Snowflake** – explores recursive curve construction.
 - **Fractal Tree** – generates branching structures using recursion.
 - **Newton Fractal** – visualises the basins of attraction of Newton's method.
 
