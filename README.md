@@ -111,6 +111,7 @@ Fractal-Explorer/
 │   ├── MandelbrotSetPic.jpeg
 │   ├── SierpinskiTrianglePic.jpeg
 │   ├── KochSnowflakePic.jpeg
+|   ├── KochAntiSnowflakePic.png
 │   ├── FractalTreePic.jpeg
 │   └── NewtonFractalPic.jpeg
 │
