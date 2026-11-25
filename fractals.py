@@ -71,7 +71,6 @@ class KochAntiSnowflake:
         return np.asarray(new_points, dtype=float)
 
     def calculate(self):
-        """Return the coordinates of the anti-snowflake boundary."""
         height = np.sqrt(3) * self.size / 2
 
         points = np.array([
@@ -93,12 +92,8 @@ class KochAntiSnowflake:
         save_path=None,
         dpi=150
     ):
-        """Create a Matplotlib figure and return (fig, ax)."""
         points = self.calculate()
         fig, ax = plt.subplots(figsize=figsize)
-
-        # Centre the fractal around the middle of the plotting area while
-        # keeping fixed limits, so changing Size still changes its visible size.
         height = np.sqrt(3) * self.size / 2
         centred_x = points[:, 0] - self.size / 2
         centred_y = points[:, 1] - height / 2
@@ -1265,7 +1260,6 @@ class NewtonFractal:
 
         fig, ax = plt.subplots(figsize=figsize)
 
-        # Display each root's basin of attraction
         image = ax.imshow(
             root_indices,
             extent=[
