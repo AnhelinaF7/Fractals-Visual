@@ -1,6 +1,7 @@
 import io
 
 import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
 import streamlit as st
 
 from fractals import (
@@ -10,7 +11,6 @@ from fractals import (
     KochSnowflake,
     FractalTree,
     NewtonFractal,
-    KochAntiSnowflake,
 )
 
 
@@ -35,37 +35,15 @@ st.markdown(
         margin-bottom: 1.5rem;
     }
     
+    div[data-testid="stImage"] img {
+    height: 250px;
+    object-fit: contain;
+}
+    
     div.stButton > button {
         width: 100%;
         min-height: 3rem;
         border-radius: 12px;
-    }
-
-    /* Keep all seven fractal cards exactly the same size. */
-    div[class*="st-key-fractal_card_"] {
-        height: 510px;
-        min-height: 510px;
-        max-height: 510px;
-        overflow: hidden;
-    }
-
-    /* Give every card image the same visual area. */
-    div[class*="st-key-fractal_card_"] [data-testid="stImage"] {
-        height: 205px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-    }
-
-    div[class*="st-key-fractal_card_"] [data-testid="stImage"] img {
-        width: 100%;
-        height: 205px;
-        object-fit: contain;
-    }
-
-    div[class*="st-key-fractal_card_"] h2 {
-        min-height: 3.5rem;
     }
     </style>
     """,
@@ -96,12 +74,6 @@ FRACTALS = {
         "description": "A geometric fractal built by repeatedly adding triangular bumps.",
         "symbol": "",
         "image": "Pictures/KochSnowflakePic.jpeg",
-    },
-    "Koch Anti-Snowflake": {
-        "class": KochAntiSnowflake,
-        "description": "A geometric fractal created by repeatedly adding inward-pointing triangular bumps.",
-        "symbol": "",
-        "image": "Pictures/Koch-AntiSnowflake.png",
     },
     "Fractal Tree": {
         "class": FractalTree,
@@ -141,7 +113,7 @@ if st.session_state.selected_fractal is None:
 
     for index, name in enumerate(names):
         with card_columns[index % 3]:
-            with st.container(border=True, key=f"fractal_card_{index}"):
+            with st.container(border=True):
 
                 fractal_data = FRACTALS[name]
                 if "image" in fractal_data:
@@ -174,7 +146,7 @@ else:
 
     st.divider()
 
-    # Sidebar controls
+
     st.sidebar.title("Fractal settings")
     st.sidebar.caption("Change a setting to update the visualisation.")
 
@@ -329,26 +301,19 @@ else:
             colour=colour,
             line_width=line_width,
         )
-    
-    elif selected == "Koch Anti-Snowflake":
-        st.sidebar.markdown("### Shape settings")
-        depth = st.sidebar.slider("Recursion depth", 0, 5, 3)
-        size = st.sidebar.slider("Size", 0.5, 5.0, 2.0, step=0.1)
-        colour = st.sidebar.color_picker("Line colour", "#4169E1")
-        line_width = st.sidebar.slider("Line width", 0.5, 4.0, 1.5, step=0.1)
-        fractal = KochAntiSnowflake(
-            depth=depth,
-            size=size,
-            colour=colour,
-            line_width=line_width
-        )
 
     else:
         st.sidebar.markdown("### Branch settings")
         depth = st.sidebar.slider("Recursion depth", 1, 12, 9)
         length = st.sidebar.slider("Initial branch length", 0.5, 3.0, 1.0, step=0.1)
         branch_angle = st.sidebar.slider("Branch angle", 5, 80, 30)
-        length_ratio = st.sidebar.slider("Branch length ratio", 0.3, 0.9, 0.7, step=0.05,)
+        length_ratio = st.sidebar.slider(
+            "Branch length ratio",
+            0.3,
+            0.9,
+            0.7,
+            step=0.05,
+        )
         colour = st.sidebar.color_picker("Tree colour", "#228B22")
         line_width = st.sidebar.slider("Line width", 0.5, 4.0, 1.5, step=0.1)
         fractal = FractalTree(
