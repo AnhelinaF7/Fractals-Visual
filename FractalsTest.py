@@ -1,7 +1,10 @@
+import matplotlib.pyplot as plt
+
 from fractals import JuliaSet
 from fractals import MandelbrotSet
 from fractals import SierpinskiTriangle
 from fractals import KochSnowflake
+from fractals import KochAntiSnowflake
 from fractals import FractalTree
 from fractals import NewtonFractal
 
@@ -43,6 +46,13 @@ koch = KochSnowflake(
     line_width=1.5
 )
 
+antisnowflake = KochAntiSnowflake(
+    depth=4,
+    size=2,
+    colour="purple",
+    line_width=1.2
+)
+
 tree = FractalTree(
     depth=9,
     length=1,
@@ -65,3 +75,6 @@ sierpinski.plot()
 koch.plot()
 tree.plot()
 newton.plot()
+antisnowflake.plot()
+
+plt.show()

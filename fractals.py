@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 
 
 class KochAntiSnowflake:
-    """Generate and plot an inward-pointing Koch anti-snowflake."""
 
     def __init__(
         self,
@@ -61,8 +60,6 @@ class KochAntiSnowflake:
             two_thirds = p1 + 2 * (p2 - p1) / 3
             direction = two_thirds - one_third
 
-            # The +60 degree rotation creates an inward-pointing notch
-            # for the counter-clockwise orientation of the initial triangle.
             peak = one_third + rotation @ direction
 
             new_points.extend([p1, one_third, peak, two_thirds])
@@ -71,6 +68,7 @@ class KochAntiSnowflake:
         return np.asarray(new_points, dtype=float)
 
     def calculate(self):
+
         height = np.sqrt(3) * self.size / 2
 
         points = np.array([
@@ -92,8 +90,10 @@ class KochAntiSnowflake:
         save_path=None,
         dpi=150
     ):
+
         points = self.calculate()
         fig, ax = plt.subplots(figsize=figsize)
+
         height = np.sqrt(3) * self.size / 2
         centred_x = points[:, 0] - self.size / 2
         centred_y = points[:, 1] - height / 2
@@ -111,7 +111,6 @@ class KochAntiSnowflake:
             alpha=0.12
         )
 
-        # A fixed square window keeps the centre stable as Size changes.
         ax.set_xlim(-2.75, 2.75)
         ax.set_ylim(-2.75, 2.75)
         ax.set_title(title)
@@ -142,32 +141,22 @@ class JuliaSet:
         colour_map="magma"
     ):
 
-        # Complex parameter c
         self.c = complex(c_real, c_imag)
         self.c_real = c_real
         self.c_imag = c_imag
-
-        # Complex plane boundaries
         self.x_min = x_min
         self.x_max = x_max
         self.y_min = y_min
         self.y_max = y_max
-
-        # Mathematical parameters
         self.max_iterations = max_iterations
         self.escape_radius = escape_radius
-
-        # Image resolution
         self.width = width
         self.height = height
-
-        # Visualisation settings
         self.colour_map = colour_map
 
         self._validate_parameters()
 
     def _validate_parameters(self):
-        """Validate all input parameters."""
 
         if not all(np.isfinite(v) for v in [
             self.c_real, self.c_imag,
@@ -255,7 +244,6 @@ class JuliaSet:
             if not np.any(active):
                 break
 
-        # Points that did not escape within the limit
         iterations[active] = self.max_iterations
 
         return iterations
@@ -347,22 +335,14 @@ class MandelbrotSet:
         height=800,
         colour_map="magma"
     ):
-
-        # Complex plane boundaries
         self.x_min = x_min
         self.x_max = x_max
         self.y_min = y_min
         self.y_max = y_max
-
-        # Mathematical parameters
         self.max_iterations = max_iterations
         self.escape_radius = escape_radius
-
-        # Image resolution
         self.width = width
         self.height = height
-
-        # Visualisation settings
         self.colour_map = colour_map
 
         self._validate_parameters()
@@ -423,7 +403,6 @@ class MandelbrotSet:
 
     def calculate(self):
 
-        # Create coordinate arrays
         x = np.linspace(
             self.x_min,
             self.x_max,
@@ -436,47 +415,37 @@ class MandelbrotSet:
             self.height
         )
 
-        # Create a grid of complex numbers c
         X, Y = np.meshgrid(x, y)
         C = X + 1j * Y
-
-        # Initially z = 0 for every point
         Z = np.zeros(C.shape, dtype=np.complex128)
 
-        # Store escape iteration counts
         iterations = np.zeros(
             C.shape,
             dtype=np.int32
         )
 
-        # Track points that have not escaped
         active = np.ones(
             C.shape,
             dtype=bool
         )
 
-        # Iterate the Mandelbrot formula
         for i in range(self.max_iterations):
 
             Z[active] = (
                 Z[active] ** 2 + C[active]
             )
 
-            # Check which points have escaped
             escaped = np.abs(Z) > self.escape_radius
 
             newly_escaped = active & escaped
 
-            # Record escape iteration
             iterations[newly_escaped] = i + 1
 
-            # Remove escaped points from further calculations
             active[newly_escaped] = False
 
             if not np.any(active):
                 break
 
-        # Points that did not escape within the iteration limit
         iterations[active] = self.max_iterations
 
         return iterations
@@ -519,10 +488,8 @@ class MandelbrotSet:
         ):
             raise ValueError("dpi must be a positive integer.")
 
-        # Calculate the fractal
         iterations = self.calculate()
 
-        # Create the figure
         fig, ax = plt.subplots(figsize=figsize)
 
         image = ax.imshow(
@@ -584,7 +551,6 @@ class SierpinskiTriangle:
         self._validate_parameters()
 
     def _validate_parameters(self):
-        """Validate all input parameters."""
 
         if (
             isinstance(self.depth, bool)
@@ -603,18 +569,10 @@ class SierpinskiTriangle:
             raise ValueError("background_colour must be a string.")
 
     def _midpoint(self, point1, point2):
-        """Calculate the midpoint between two points."""
 
         return (point1 + point2) / 2
 
     def calculate(self):
-        """
-        Generate all triangles in the Sierpinski Triangle.
-
-        Returns:
-            A list of triangles, each containing three vertices.
-        """
-
         height = self.size * np.sqrt(3) / 2
 
         initial_triangle = np.array([
@@ -657,7 +615,6 @@ class SierpinskiTriangle:
         save_path=None,
         dpi=150
     ):
-        """Visualise the Sierpinski Triangle."""
 
         selected_colour = colour or self.colour
         selected_background = (
@@ -683,7 +640,6 @@ class SierpinskiTriangle:
                 color=selected_colour
             )
 
-        # Fixed viewport makes the Size slider visibly change the triangle.
         ax.set_xlim(-3.0, 3.0)
         ax.set_ylim(-2.0, 2.0)
         ax.set_title(title)
@@ -726,7 +682,6 @@ class KochSnowflake:
         self._validate_parameters()
 
     def _validate_parameters(self):
-        """Validate all input parameters."""
 
         if (
                 isinstance(self.depth, bool)
@@ -748,12 +703,6 @@ class KochSnowflake:
             raise ValueError("colour must be a string.")
 
     def calculate(self):
-        """
-        Generate the coordinates of the Koch Snowflake.
-
-        Returns:
-            A NumPy array containing the snowflake vertices.
-        """
 
         height = self.size * np.sqrt(3) / 2
 
@@ -776,7 +725,6 @@ class KochSnowflake:
                 first = p1 + vector / 3
                 second = p1 + 2 * vector / 3
 
-                # Rotate the middle segment by -60 degrees
                 angle = -np.pi / 3
 
                 rotation = np.array([
@@ -809,7 +757,6 @@ class KochSnowflake:
             save_path=None,
             dpi=150
     ):
-        """Visualise the Koch Snowflake."""
 
         selected_colour = colour or self.colour
         selected_width = (
@@ -834,10 +781,10 @@ class KochSnowflake:
             linewidth=selected_width
         )
 
-        # Fixed viewport makes the Size slider visibly change the snowflake.
-        # The Koch construction extends below the original triangle's base.
-        ax.set_xlim(-0.5, 5.5)
-        ax.set_ylim(-2.0, 5.0)
+        margin = self.size * 0.2
+        ax.set_xlim(-margin, self.size + margin)
+        height = self.size * np.sqrt(3) / 2
+        ax.set_ylim(-margin, height + margin)
         ax.set_title(title)
         ax.set_aspect("equal", adjustable="box")
 
@@ -881,7 +828,6 @@ class FractalTree:
         self._validate_parameters()
 
     def _validate_parameters(self):
-        """Validate all input parameters."""
 
         if (
             isinstance(self.depth, bool)
@@ -927,14 +873,12 @@ class FractalTree:
         depth,
         segments
     ):
-        """Generate branches using recursion."""
 
         if depth == 0:
             return
 
         angle_radians = np.radians(angle)
 
-        # Calculate the end point of the branch
         x_end = x + length * np.sin(angle_radians)
         y_end = y + length * np.cos(angle_radians)
 
@@ -943,10 +887,8 @@ class FractalTree:
             (x_end, y_end)
         ])
 
-        # Calculate the length of the next branches
         new_length = length * self.length_ratio
 
-        # Generate the left branch
         self._generate_branch(
             x_end,
             y_end,
@@ -956,7 +898,6 @@ class FractalTree:
             segments
         )
 
-        # Generate the right branch
         self._generate_branch(
             x_end,
             y_end,
@@ -967,12 +908,6 @@ class FractalTree:
         )
 
     def calculate(self):
-        """
-        Generate all tree branches.
-
-        Returns:
-            A list of line segments.
-        """
 
         segments = []
 
@@ -997,7 +932,6 @@ class FractalTree:
         save_path=None,
         dpi=150
     ):
-        """Visualise the Fractal Tree."""
 
         selected_colour = colour or self.colour
 
@@ -1148,14 +1082,12 @@ class NewtonFractal:
 
         Z = X + 1j * Y
 
-        # Three roots of z^3 - 1 = 0
         roots = np.array([
             1 + 0j,
             -0.5 + 1j * np.sqrt(3) / 2,
             -0.5 - 1j * np.sqrt(3) / 2
         ])
 
-        # -1 means not yet converged
         root_indices = np.full(
             Z.shape,
             -1,
@@ -1172,14 +1104,11 @@ class NewtonFractal:
             if not np.any(active):
                 break
 
-            # Newton's method:
-            # z(n+1) = z(n) - (z(n)^3 - 1) / (3*z(n)^2)
 
             current = Z[active]
 
             denominator = 3 * current ** 2
 
-            # Avoid division by zero
             safe = np.abs(denominator) > 1e-14
 
             updated = np.zeros_like(current)
@@ -1192,7 +1121,6 @@ class NewtonFractal:
 
             Z[active] = updated
 
-            # Find which root each point approaches
             distances = np.abs(
                 Z[active, None] - roots[None, :]
             )
@@ -1211,7 +1139,6 @@ class NewtonFractal:
                     minimum_distances < self.tolerance
             )
 
-            # A point with a zero denominator is not updated
             converged[~safe] = False
 
             active_indices = np.where(active)
@@ -1221,13 +1148,11 @@ class NewtonFractal:
                 active_indices[1][converged]
             ] = nearest_roots[converged]
 
-            # Remove converged points
             active[
                 active_indices[0][converged],
                 active_indices[1][converged]
             ] = False
 
-            # Remove points with an unsafe denominator
             invalid = ~safe
 
             active[

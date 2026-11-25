@@ -174,7 +174,6 @@ else:
 
     st.divider()
 
-    # Sidebar controls
     st.sidebar.title("Fractal settings")
     st.sidebar.caption("Change a setting to update the visualisation.")
 
@@ -348,7 +347,7 @@ else:
         depth = st.sidebar.slider("Recursion depth", 1, 12, 9)
         length = st.sidebar.slider("Initial branch length", 0.5, 3.0, 1.0, step=0.1)
         branch_angle = st.sidebar.slider("Branch angle", 5, 80, 30)
-        length_ratio = st.sidebar.slider("Branch length ratio", 0.3, 0.9, 0.7, step=0.05,)
+        length_ratio = st.sidebar.slider("Branch length ratio", 0.3, 0.9, 0.7, step=0.05)
         colour = st.sidebar.color_picker("Tree colour", "#228B22")
         line_width = st.sidebar.slider("Line width", 0.5, 4.0, 1.5, step=0.1)
         fractal = FractalTree(
@@ -378,7 +377,7 @@ else:
         image_buffer.seek(0)
 
         st.download_button(
-            label="⬇ Download fractal as PNG",
+            label="Download fractal as PNG",
             data=image_buffer,
             file_name=f"{selected.lower().replace(' ', '_')}.png",
             mime="image/png",
